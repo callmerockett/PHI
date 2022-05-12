@@ -33,7 +33,7 @@ component bc
 end component;
 
 	signal r_CLK : std_logic := '0';
-	signal r_RESET : std_logic := '0';
+	signal r_RESET : std_logic := '1';
 	signal r_BUTTON : std_logic := '0';
 	signal w_RELEASED : std_logic := '0';
 	signal w_ENABLE_RELEASE : std_logic := '0';
