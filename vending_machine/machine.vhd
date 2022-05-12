@@ -21,7 +21,7 @@ entity machine is
         -- Output
         o_released_item : out std_logic -- d
     );
-end Machine;
+end machine;
 
 architecture behave of machine is
     signal r_ACC : std_logic_vector(7 downto 0) := (others => '0');
