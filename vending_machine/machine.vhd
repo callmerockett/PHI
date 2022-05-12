@@ -2,7 +2,7 @@ library ieee;
 use ieee.std_logic_1164.all;
 use ieee.numeric_std.all;
 
-entity Machine is
+entity machine is
     port(
         i_clock : in std_logic;
         i_reset : in std_logic;
@@ -23,7 +23,7 @@ entity Machine is
     );
 end Machine;
 
-architecture behave of Machine is
+architecture behave of machine is
     signal r_ACC : std_logic_vector(7 downto 0) := (others => '0');
 
 begin
