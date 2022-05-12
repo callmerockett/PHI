@@ -67,10 +67,10 @@ logica_saida : process(r_STATE)
 				o_enable_release <= '0';
 				o_enable_value <= '1';
 			when COMPARA =>
-				o_enable_release <= '1';
+				o_enable_release <= '0';
 				o_enable_value <= '0';
 			when LIBERA =>
-				o_enable_release <= '0';
+				o_enable_release <= '1';
 				o_enable_value <= '0';
 			when others =>
 				o_enable_release <= '0';
