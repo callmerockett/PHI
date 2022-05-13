@@ -19,7 +19,7 @@ component sd
 end component;
 
 signal r_CLK 		: std_logic := '0';
-signal r_RESET 	    : std_logic := '0';
+signal r_RESET 	    : std_logic := '1';
 signal r_BUTTON 	: std_logic := '0'; 
 signal r_VALOR 	    : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(2, 8));
 signal r_PRECO 	    : std_logic_vector(7 downto 0) := std_logic_vector(to_unsigned(11, 8));
@@ -27,8 +27,8 @@ signal w_SAIDAITEM  : std_logic;
 
 begin
 	r_CLK <= not r_CLK after 5 ns;
-	r_BUTTON <= not r_BUTTON after 10 ns;
-	r_RESET <= '1' after 5 ns;
+	r_BUTTON <= not r_BUTTON after 3 ns;
+	r_RESET <= '0' after 5 ns;
 	SD_INST : sd
 		port map(
 			i_clock 		    => r_CLK,
