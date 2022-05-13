@@ -25,54 +25,29 @@ end bo;
 
 architecture behave of bo is
     signal r_ACC : std_logic_vector(7 downto 0) := (others => '0'); -- acumula valores
-    signal r_D : std_logic := '0'; -- guarda resultado da comparação
+    -- signal r_D : std_logic := '0'; -- guarda resultado da comparação
 begin
-    -- r_ACC <= (others => '0') when Is_X(r_ACC) else r_ACC;
-    p_SUM : process (i_clock, i_reset) is
+    p_SUM_COMP_RELEASE : process (i_clock, i_reset) is
     begin
         if rising_edge(i_clock) then
             if (i_reset = '1') then
                 r_ACC <= (others => '0');
-                r_D <= '0';
                 o_release <= '0';
                 o_released_item <= '0';
-            -- Add new value to accumulated 
-            elsif (i_enable_value = '1') then
+            elsif (i_enable_value = '1') then -- state=ARMAZENA
                 r_ACC <= std_logic_vector(unsigned(r_ACC) + unsigned(i_value));
-            end if;
-        end if;
-    end process;
-
-    p_COMP : process (i_clock, i_reset) is
-    begin
-        if rising_edge(i_clock) then
-            if (i_reset = '1') then
-                r_ACC <= (others => '0');
-                r_D <= '0';
-                o_release <= '0';
                 o_released_item <= '0';
-            elsif (unsigned(r_ACC) >= unsigned(i_price)) then -- Comparison between accumulated value and item's price
-                r_ACC <= (others => '0');
-                o_release <= '1';
-                r_D <= '1';
-                o_released_item <= '0';
-            end if;
-        end if;
-    end process;
-                
-    p_RELEASE : process(i_clock, i_reset) is
-    begin
-        if rising_edge(i_clock) then
-            if (i_reset = '1') then
-                r_ACC <= (others => '0');
-                r_D <= '0';
-                o_release <= '0';
-                o_released_item <= '0';
-            elsif (i_enable_release = '1') then -- Release item
+            elsif (i_enable_release = '1') then -- state=LIBERA
                 r_ACC <= (others => '0');
                 o_release <= '0';
-                o_released_item <= r_D;
-                r_D <= '0';
+                o_released_item <= '1';
+            else --state=ENTRADA|COMPARA
+                o_released_item <= '0';
+                if (unsigned(r_ACC) >= unsigned(i_price)) then --combinational logic
+                    o_release <= '1';
+                else 
+                    o_release <= '0';
+                end if;
             end if;
         end if;
     end process;
